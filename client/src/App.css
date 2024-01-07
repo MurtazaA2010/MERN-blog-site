@@ -1,7 +1,35 @@
-/*header*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap');/*header*/
+*{
+  color: black;
+}
+
 .Header {
+  margin-top: 20px;
+  border-bottom: 1px solid rgba(1, 1, 1, 0.2);
   display: flex;
   justify-content: space-between;
   margin-left: 100px;
   margin-right: 100px;
+  font-family: 'Poppins', sans-serif;
+}
+
+header h3 a {
+  font-size: 25px;
+  font-family: 'Roboto', sans-serif;
+
+}
+
+a {
+  text-decoration: none;
+}
+nav {
+  margin-top: 15px;
+
+}
+
+nav a  {
+  font-size: 18px;
+}
+.signup {
+  margin-right: 35px;
 }
