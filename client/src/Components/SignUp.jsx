@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const SignUp = () => {
+    const history = useHistory();
+    console.log(history)
     const [username, setUsername] = useState('');
-    const [pass, setPass] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -11,7 +14,7 @@ const SignUp = () => {
         try {
             const response = await fetch('http://localhost:3001/request', {
                 method: 'POST',
-                body: JSON.stringify({ username, pass }),
+                body: JSON.stringify({ username, password }),
                 headers: { 'Content-Type': 'application/json' }
             });
     
@@ -20,10 +23,16 @@ const SignUp = () => {
             }
     
             // You can handle the success here, or check the response data
+           
             const responseData = await response.json();
+            history.push('/');
             console.log('Success:', responseData);
-        } catch (error) {
+            alert('Registration Succesful');
+        
+            } 
+            catch (error) {
             console.error('Error:', error);
+            alert('Registration err try again later')
         }
     };
     
@@ -43,8 +52,8 @@ const SignUp = () => {
                     type="password"
                     placeholder="Password" 
                     required
-                    value={pass}
-                    onChange={(e)=> setPass(e.target.value)}
+                    value={password}
+                    onChange={(e)=> setPassword(e.target.value)}
                  />
                 <br />
                 <button>Sign Up</button>
