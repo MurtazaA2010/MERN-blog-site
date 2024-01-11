@@ -12,11 +12,12 @@ const SignUp = () => {
         e.preventDefault();
     
         try {
-            const response = await fetch('http://localhost:3001/request', {
+            const response = await fetch('http://localhost:4000/signup', {
                 method: 'POST',
                 body: JSON.stringify({ username, password }),
                 headers: { 'Content-Type': 'application/json' }
             });
+
     
             if (!response.ok) {
                 throw new Error('Network response was not ok');
