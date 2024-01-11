@@ -3,10 +3,19 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 const Signin= () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const handleSubmit = async (e)=> {
+        e.preventDefault();
+
+        await fetch('http://localhost:3001/signin', {
+                method: 'POST',
+                body: JSON.stringify({ username, password }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+    }
     return ( 
         <div className="sign-in">
             <h3>Sign In</h3>
-            <form action="">
+            <form action="" onSubmit={handleSubmit}>
                 <input 
                 type="text" 
                 placeholder="Username" 
