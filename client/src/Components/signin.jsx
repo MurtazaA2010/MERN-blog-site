@@ -6,7 +6,7 @@ const Signin= () => {
     const handleSubmit = async (e)=> {
         e.preventDefault();
 
-        await fetch('http://localhost:3001/signin', {
+        await fetch('http://localhost:4000/signin', {
                 method: 'POST',
                 body: JSON.stringify({ username, password }),
                 headers: { 'Content-Type': 'application/json' }
