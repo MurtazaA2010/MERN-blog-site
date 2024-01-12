@@ -3,7 +3,9 @@ const cors = require('cors');
 const { default: mongoose } = require('mongoose');
 const User = require('./models/User');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const cookieparser = require('cookie-parser');
+
 const saltRounds = 10;
 const secret = 'hdskjfj49353kjdfsdjf';
 
@@ -26,7 +28,8 @@ app.use(cors(
         origin: 'http://localhost:3000'
     }
 ));
-app.use(express.json())
+app.use(express.json());
+app.use(cookieparser());
 
 app.post('/signup', (req, res)=> {
     const {username, password} = req.body;
@@ -70,3 +73,15 @@ app.post('/signin', async (req, res)=> {
         res.status(400).json('Wrong credentials');
     }
 });
+
+app.get('/profile', (req,res)=> {
+    const {token}= req.cookies;
+    jwt.verify(token, secret).then((err, info)=> {
+      if(err) {
+        console.log(err)
+      }  else {
+        res.json(info)
+      }
+    })
+})
+
