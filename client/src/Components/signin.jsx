@@ -1,21 +1,34 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link, Route } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 const Signin= () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const handleSubmit = async (e)=> {
+    const [redirect, setRedirect] = useState(false);
+    const history = useHistory();
+
+    const handleSignIn = async (e)=> {
         e.preventDefault();
 
-        await fetch('http://localhost:4000/signin', {
+        const response = await fetch('http://localhost:4000/signin', {
                 method: 'POST',
                 body: JSON.stringify({ username, password }),
-                headers: { 'Content-Type': 'application/json' }
-            })
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+        })
+        if(response.ok) {
+            setRedirect(true);
+        } else {
+            alert('passoword or username is wrong please try again or create a account first')
+        }
+    }
+    if(redirect) {
+        history.push('/')
     }
     return ( 
         <div className="sign-in">
             <h3>Sign In</h3>
-            <form action="" onSubmit={handleSubmit}>
+            <form action="" onSubmit={handleSignIn}>
                 <input 
                 type="text" 
                 placeholder="Username" 
