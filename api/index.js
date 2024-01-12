@@ -3,7 +3,9 @@ const cors = require('cors');
 const { default: mongoose } = require('mongoose');
 const User = require('./models/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 const saltRounds = 10;
+const secret = 'hdskjfj49353kjdfsdjf';
 
 const app = express();
 
@@ -18,10 +20,12 @@ mongoose.connect('mongodb://127.0.0.1:27017/BLOGAPP').then(()=> {
 
 
 
-app.use(cors({
-    origin: '*',
-    credentials: true,
-}));
+app.use(cors(
+    {
+        credentials: true,
+        origin: 'http://localhost:3000'
+    }
+));
 app.use(express.json())
 
 app.post('/signup', (req, res)=> {
@@ -45,10 +49,24 @@ app.post('/signin', async (req, res)=> {
     const {username, password} = req.body;
     const user = await User.findOne({username});
 
-    if (user) {
-        const passOk = bcrypt.compareSync(password, user.password);
-        res.json(passOk);
+    if (!user) {
+        // User not found
+        res.status(400).json('User not found');
+        return;
+    }
+
+    const passOk = bcrypt.compareSync(password, user.password);
+
+    if(passOk) {
+        jwt.sign({ username, id: user._id }, secret, (err, token) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ message: 'Internal Server Error' });
+            } else {
+                res.cookie('token', token).json('ok');
+            }
+        });
     } else {
-        res.json(false); // User not found
+        res.status(400).json('Wrong credentials');
     }
 });
