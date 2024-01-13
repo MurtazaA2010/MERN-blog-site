@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Header = () => {
   const [username, setUsername] = useState(null);
-
   useEffect(() => {
     fetch('http://localhost:4000/profile', {
       credentials: 'include',
