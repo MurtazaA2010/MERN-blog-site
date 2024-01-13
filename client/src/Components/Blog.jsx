@@ -1,4 +1,5 @@
 import '../blog.css';
+
 const Blog = () => {
     return ( 
         <div className="blogs">
@@ -41,7 +42,6 @@ const Blog = () => {
                 </div>
             </div>
         </div>
-        
      );
 }
  
