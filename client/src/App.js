@@ -6,7 +6,6 @@ import Blog from './Components/Blog';;
 import SignUp from './Components/SignUp';
 import Signin from './Components/Signin';
 
-
 function App() {
   return (
       <Router>
