@@ -1,4 +1,4 @@
-import '../blog.css'
+import '../blog.css';
 const Blog = () => {
     return ( 
         <div className="blogs">
