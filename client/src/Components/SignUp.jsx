@@ -15,8 +15,7 @@ const SignUp = () => {
                 body: JSON.stringify({ username, password }),
                 headers: { 'Content-Type': 'application/json' }
             });
-
-    
+            
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
