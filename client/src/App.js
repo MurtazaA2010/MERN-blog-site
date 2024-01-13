@@ -9,7 +9,6 @@ import Signin from './Components/Signin';
 
 function App() {
   return (
-   
       <Router>
         <Header />
         <Switch>
