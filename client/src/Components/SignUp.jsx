@@ -7,10 +7,8 @@ const SignUp = () => {
     console.log(history)
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
     const handleSignUp = async (e) => {
         e.preventDefault();
-    
         try {
             const response = await fetch('http://localhost:4000/signup', {
                 method: 'POST',
