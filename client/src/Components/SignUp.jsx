@@ -46,6 +46,7 @@ const SignUp = () => {
                     onChange={(e)=> {setUsername(e.target.value)}}
                 />
                 <br />
+                
                 <input 
                     type="password"
                     placeholder="Password" 
@@ -54,10 +55,10 @@ const SignUp = () => {
                     onChange={(e)=> setPassword(e.target.value)}
                  />
                 <br />
+                
                 <button>Sign Up</button>
             </form>
             <p>Already have an account? <Link to='/login'>Sign In</Link></p>
-
         </div>
 
      );
