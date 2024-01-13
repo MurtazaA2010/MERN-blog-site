@@ -6,17 +6,14 @@ const Header = () => {
   useEffect(() => {
     fetch('http://localhost:4000/profile', {
       credentials: 'include',
-    })
-      .then((response) => {
+    }).then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         return response.json();
-      })
-      .then((userInfo) => {
+      }).then((userInfo) => {
         setUsername(userInfo.username);
-      })
-      .catch((error) => {
+      }).catch((error) => {
         console.error('Error fetching user profile:', error);
         // Handle the error, e.g., redirect to login page or show an error message
       });
