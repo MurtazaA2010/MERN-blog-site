@@ -48,9 +48,9 @@ app.post('/signup', (req, res)=> {
     });
 });
 
-app.post('/signin', async (req, res)=> {
-    const {username, password} = req.body;
-    const user = await User.findOne({username});
+app.post('/signin', async (req, res) => {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
 
     if (!user) {
         // User not found
@@ -60,13 +60,14 @@ app.post('/signin', async (req, res)=> {
 
     const passOk = bcrypt.compareSync(password, user.password);
 
-    if(passOk) {
+    if (passOk) {
         jwt.sign({ username, id: user._id }, secret, (err, token) => {
             if (err) {
                 console.error(err);
                 res.status(500).json({ message: 'Internal Server Error' });
             } else {
-                res.cookie('token', token).json('ok');
+                res.cookie('token', token);
+                res.json('ok');
             }
         });
     } else {
@@ -74,14 +75,10 @@ app.post('/signin', async (req, res)=> {
     }
 });
 
+
 app.get('/profile', (req,res)=> {
     const {token}= req.cookies;
-    jwt.verify(token, secret).then((err, info)=> {
-      if(err) {
-        console.log(err)
-      }  else {
-        res.json(info)
-      }
-    })
-})
-
+    jwt.verify(token, secret, {}, (err, info)=> {
+        if (err) throw err;
+        res.json(info);
+    })})
