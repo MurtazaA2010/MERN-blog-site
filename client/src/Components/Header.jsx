@@ -22,6 +22,7 @@ const Header = () => {
         console.error('Error fetching user profile:', error);
       });
   }, []);
+  
 //logout
 const logout = () => {
     fetch('http://localhost:4000/logout', {
