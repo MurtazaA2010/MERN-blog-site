@@ -8,9 +8,7 @@ const cookieparser = require('cookie-parser');
 
 const saltRounds = 10;
 const secret = 'hdskjfj49353kjdfsdjf';
-
 const app = express();
-
 
 mongoose.connect('mongodb://127.0.0.1:27017/BLOGAPP').then(()=> {
     console.log('Connected to mongo DB');
