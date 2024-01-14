@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, Route } from 'react-router-dom/cjs/react-router-dom.min';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-
 const Signin= () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -50,6 +49,7 @@ const Signin= () => {
             </form>
             <p>Don't have an account? <Link to='/signup'>Sign Up</Link></p>
         </div>
+
      );
 }
  
