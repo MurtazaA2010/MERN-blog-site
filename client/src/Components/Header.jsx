@@ -18,7 +18,6 @@ const Header = () => {
       })
       .catch((error) => {
         console.error('Error fetching user profile:', error);
-        // Handle the error, e.g., redirect to login page or show an error message
       });
   }, []);
 
