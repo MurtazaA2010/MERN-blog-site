@@ -40,8 +40,7 @@ const logout = () => {
         {username ? (
           <>
             <Link className="signup" to="/create">
-            Create New Post
-            </Link>
+            Create New Post</Link>
             <a onClick={logout}> Logout({username})</a>
           </>
           
