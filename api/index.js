@@ -13,7 +13,6 @@ const app = express();
 mongoose.connect('mongodb://127.0.0.1:27017/BLOGAPP').then(()=> {
     console.log('Connected to mongo DB');
     app.listen(4000)
-
 }).catch(err => {
     console.log(err);
 })
