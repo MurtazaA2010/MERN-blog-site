@@ -31,7 +31,6 @@ const logout = () => {
     })
     setUsername(null)
 }
-
   return (
     <div className="Header">
       <header>
