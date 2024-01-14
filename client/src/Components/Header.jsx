@@ -57,5 +57,4 @@ const logout = () => {
     </div>
   );
 };
-
 export default Header;
