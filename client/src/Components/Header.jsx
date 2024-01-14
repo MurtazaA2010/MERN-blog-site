@@ -47,8 +47,7 @@ const logout = () => {
           
         ) : (
           <>
-            <Link className="signup" to="/signup">
-              Sign Up
+            <Link className="signup" to="/signup">Sign Up
             </Link>
             <Link to="/signin">Login</Link>
           </>
