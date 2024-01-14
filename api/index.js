@@ -52,9 +52,7 @@ app.post('/signin', async (req, res) => {
         res.status(400).json('User not found');
         return;
     }
-
     const passOk = bcrypt.compareSync(password, user.password);
-
     if (passOk) {
         jwt.sign({ username, id: user._id }, secret, (err, token) => {
             if (err) {
