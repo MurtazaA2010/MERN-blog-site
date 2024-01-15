@@ -7,10 +7,8 @@ const Create = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [Snippet, setSnippet] = useState('');
-    const data = new FormData();
-    data.set('title' , title);
-    data.set('content' , content);
-    data.set('Snippet', Snippet)
+    const [files, setFiles] = useState('');
+    
     const modules = {
         toolbar: [
           [{ 'header': [1, 2, false] }],
@@ -31,15 +29,25 @@ const Create = () => {
       const createNewPost = (e) => {
         e.preventDefault();
 
+        const data = new FormData();
+        data.set('title' , title);
+        data.set('content' , content);
+        data.set('Snippet', Snippet);
+        data.set('file', files[0]);
+
         fetch('http://localhost:4000/new_blog', {
-            method:'POST'
+            method:'POST',
+            body: data,
         })
       }
     return ( 
         <div className="create">
             <h2>Create a New Blog</h2>
             <form action="" onSubmit={createNewPost}>
-                <input type="file"/>
+                <input 
+                    type="file"
+                    onChange={(e) => setFiles(e.target.files)}
+                />
                 <br />
                 <input 
                     type="text" 
