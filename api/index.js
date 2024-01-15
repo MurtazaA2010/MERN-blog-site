@@ -2,9 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const { default: mongoose } = require('mongoose');
 const User = require('./models/User');
+const Blog = require('./models/Blog')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieparser = require('cookie-parser');
+const multer = require('multer');
+const uploadMiddleware = multer({ dest: 'uploads/' })
 
 const saltRounds = 10;
 const secret = 'hdskjfj49353kjdfsdjf';
@@ -59,8 +62,10 @@ app.post('/signin', async (req, res) => {
                 console.error(err);
                 res.status(500).json({ message: 'Internal Server Error' });
             } else {
-                res.cookie('token', token);
-                res.json('ok');
+                res.cookie('token', token).json({
+                    id: user._id,
+                    username,
+                })               
             }
         });
     } else {
@@ -77,4 +82,8 @@ app.get('/profile', (req,res)=> {
 
 app.post('/logout', (req, res)=> {
     res.cookie('token', '').json('ok')
+})
+
+app.post('new_blog', uploadMiddleware.single('file') ,(req,res) => {
+
 })
