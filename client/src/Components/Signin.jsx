@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-
+import { UserContext } from '../UserContext';
 const Signin= () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [redirect, setRedirect] = useState(false);
+    const {setUserInfo} = useContext(UserContext);
     const history = useHistory();
 
     const handleSignIn = async (e)=> {
@@ -17,11 +18,16 @@ const Signin= () => {
                 credentials: 'include',
         })
         if(response.ok) {
-            setRedirect(true);
+            response.json().then((userInfo) => {
+                setUserInfo(userInfo);
+                setRedirect(true);
+            })
+            
         } else {
             alert('passoword or username is wrong please try again or create a account first')
         }
-    } if(redirect) {
+    }
+    if(redirect) {
         history.push('/')
     }
     return ( 
@@ -48,5 +54,8 @@ const Signin= () => {
             </form>
             <p>Don't have an account? <Link to='/signup'>Sign Up</Link></p>
         </div>
-)}
+
+     );
+}
+ 
 export default Signin;
