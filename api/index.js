@@ -29,6 +29,7 @@ app.use(cors(
 ));
 app.use(express.json());
 app.use(cookieparser());
+app.use('/uploads', express.static(__dirname + '/uploads'))
 
 app.post('/signup', (req, res)=> {
     const {username, password} = req.body;
@@ -74,21 +75,77 @@ app.post('/signin', async (req, res) => {
     }
 });
 
-app.get('/profile', (req,res)=> {
-    const {token}= req.cookies;
-    jwt.verify(token, secret, {}, (err, info)=> {
-        if (err) throw err;
-        res.json(info);
-})});
+app.get('/profile', (req, res) => {
+    const { token } = req.cookies;
+
+    if (!token) {
+        // Token not provided
+        res.status(401).json({ message: 'JWT must be provided' });
+        return;
+    }
+
+    jwt.verify(token, secret, {}, (err, info) => {
+        if (err) {
+            // Invalid token
+            res.status(401).json({ message: 'Invalid JWT' });
+        } else {
+            res.json(info);
+        }
+    });
+});
+
 
 app.post('/logout', (req, res)=> {
     res.cookie('token', '').json('ok')
 })
 
-app.post('/new_blog', uploadMiddleware.single('file') ,(req,res) => {
+app.post('/new_blog', uploadMiddleware.single('file'), async (req, res) => {
     const {originalname, path} = req.file;
     const part = originalname.split(".");
     const ext = part[part.length -1];
-    fs.renameSync(path, path+'.'+ ext);
-    res.json(ext)
-})
+    const newPath = path+'.'+ext;
+    fs.renameSync(path, newPath);
+
+    // Check if token exists
+    const { token } = req.cookies;
+    if (!token) {
+        res.status(401).json({ message: 'JWT must be provided' });
+        return;
+    }
+
+    jwt.verify(token, secret, {}, async (err, info) => {
+        if (err) {
+            res.status(401).json({ message: 'Invalid JWT' });
+            return;
+        }
+
+        const { title, snippet, content } = req.body;
+
+        const blog = new Blog({
+            title,
+            snippet,
+            content,
+            file: newPath,
+            author: info.id,
+        });
+
+        try {
+            // Save the blog and wait for the promise to resolve
+            const savedBlog = await blog.save();
+            res.json(savedBlog);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Internal Server Error' });
+        }
+    });
+});
+
+app.get('/blogs', async (req, res) => {
+    try {
+        const blogs = await Blog.find().populate('author', 'username').sort({createdAt : -1});
+        res.json(blogs);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
