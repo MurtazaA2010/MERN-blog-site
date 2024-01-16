@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap');
+
+.create {
+    margin-left: 100px;
+    margin-right: 100px;
+}
+.create h2 {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.create form input {
+    margin-bottom: 15px;
+}
+
+.create form .input {
+    width: 100%;
+    height: 35px;
+    padding: 5px;
+    border: 1px solid rgba(1, 1, 1, 0.2);
+    border-radius: 5px;
+
+}
+
+.create form .input::placeholder {
+    font-size: 15px;
+}
+
+.create form button {
+    margin-top: 10px;
+    width: 100%;
+    height: 30px;
+    cursor: pointer;
+    background-color: rgb(40, 43, 43);  
+    border: none;
+    color: white;
+    border-radius: 10px;
+}
