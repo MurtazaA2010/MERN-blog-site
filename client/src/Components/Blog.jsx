@@ -1,47 +1,45 @@
-import '../blog.css';
-
+import { useEffect, useState } from 'react';
+import '../blog.css'
+import {format, formatISO9075} from 'date-fns'
 const Blog = () => {
+    const [blogs, setBlogs] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:4000/blogs',{
+            credentials: 'include',
+        }).then(response => {
+            response.json().then(blogs => {
+                console.log(blogs)
+                setBlogs(blogs)
+            })
+        })
+    }, [])
+    
+    
     return ( 
         <div className="blogs">
-            <div className="blog-each">
+            {blogs.length > 0 && blogs.map((blog) => (
+                <div className="blog-each">
                 <div className="blog-img">
-                    <img src="https://abctrainings.in/media/thumbnails/Python-01_2_1.png" alt="" />
+                    <img src={'http://localhost:4000/'+blog.file} alt="Image not available cureently" />
                 </div>
                 <div className="blog-txt">
                     <div className="blog-title">
-                        <h3>Python for Web Development</h3>
+                        <h3>{blog.title}</h3>
                     </div>
                     <div className="blog-author">
-                        <p>Author : Murtaza</p>
+                        <p>Author : {blog.author.username}</p>
                     </div>
                     <div className="blog-time">
-                        <p>2023-1-1 6:00pm</p>
+                        <time>{format(new Date(blog.createdAt), 'MMM d, yyyy  h:mm:ss aa')}</time>
                     </div>
                     <div className="blog-details">
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem libero et eveniet amet obcaecati pariatur voluptate dignissimos! Iure, sunt omnis.</p>
+                        <p>{blog.snippet}</p>
                     </div>
                 </div>
             </div>
-            <div className="blog-each">
-                <div className="blog-img">
-                    <img src="https://abctrainings.in/media/thumbnails/Python-01_2_1.png" alt="" />
-                </div>
-                <div className="blog-txt">
-                    <div className="blog-title">
-                        <h3>Python for Web Development</h3>
-                    </div>
-                    <div className="blog-author">
-                        <p>Author : Murtaza</p>
-                    </div>
-                    <div className="blog-time">
-                        <p>2023-1-1 6:00pm</p>
-                    </div>
-                    <div className="blog-details">
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem libero et eveniet amet obcaecati pariatur voluptate dignissimos! Iure, sunt omnis.</p>
-                    </div>
-                </div>
-            </div>
+            ))}
         </div>
+        
      );
 }
  
