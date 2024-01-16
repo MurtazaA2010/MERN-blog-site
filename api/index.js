@@ -7,7 +7,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieparser = require('cookie-parser');
 const multer = require('multer');
-const uploadMiddleware = multer({ dest: 'uploads/' })
+const uploadMiddleware = multer({ dest: 'uploads/' });
+const fs = require('fs');
 
 const saltRounds = 10;
 const secret = 'hdskjfj49353kjdfsdjf';
@@ -84,6 +85,10 @@ app.post('/logout', (req, res)=> {
     res.cookie('token', '').json('ok')
 })
 
-app.post('new_blog', uploadMiddleware.single('file') ,(req,res) => {
-
+app.post('/new_blog', uploadMiddleware.single('file') ,(req,res) => {
+    const {originalname, path} = req.file;
+    const part = originalname.split(".");
+    const ext = part[part.length -1];
+    fs.renameSync(path, path+'.'+ ext);
+    res.json(ext)
 })
