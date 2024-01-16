@@ -7,15 +7,18 @@ const SignUp = () => {
     console.log(history)
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
     const handleSignUp = async (e) => {
         e.preventDefault();
+    
         try {
             const response = await fetch('http://localhost:4000/signup', {
                 method: 'POST',
                 body: JSON.stringify({ username, password }),
                 headers: { 'Content-Type': 'application/json' }
             });
-            
+
+    
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -46,7 +49,6 @@ const SignUp = () => {
                     onChange={(e)=> {setUsername(e.target.value)}}
                 />
                 <br />
-                
                 <input 
                     type="password"
                     placeholder="Password" 
@@ -55,11 +57,12 @@ const SignUp = () => {
                     onChange={(e)=> setPassword(e.target.value)}
                  />
                 <br />
-                
                 <button>Sign Up</button>
             </form>
             <p>Already have an account? <Link to='/login'>Sign In</Link></p>
+
         </div>
+
      );
 }
  
