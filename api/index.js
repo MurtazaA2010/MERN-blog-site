@@ -21,12 +21,11 @@ mongoose.connect('mongodb://127.0.0.1:27017/BLOGAPP').then(()=> {
     console.log(err);
 })
 
-app.use(cors(
-    {
-        credentials: true,
-        origin: 'http://localhost:3000'
-    }
-));
+app.use(cors({
+    credentials: true,
+    origin: 'http://localhost:3000'
+}));
+
 app.use(express.json());
 app.use(cookieparser());
 app.use('/uploads', express.static(__dirname + '/uploads'))
@@ -142,10 +141,24 @@ app.post('/new_blog', uploadMiddleware.single('file'), async (req, res) => {
 
 app.get('/blogs', async (req, res) => {
     try {
-        const blogs = await Blog.find().populate('author', 'username').sort({createdAt : -1});
+        const blogs = await Blog.find()
+        .populate('author', 'username')
+        .sort({createdAt : -1})
+        .limit(20);
+        ;
         res.json(blogs);
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: 'Internal Server Error' });
     }
+});
+
+app.get('/blogs/:id', async (req, res) => {
+    const { id } = req.params;
+    const Details = await Blog.findById(id).populate('author', ["username"]);
+
+    if (!Details) {
+        return res.status(404).json({ error: 'Blog not found' });
+    }
+    res.json(Details);
 });
