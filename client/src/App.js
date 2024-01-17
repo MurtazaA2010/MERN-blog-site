@@ -7,7 +7,7 @@ import SignUp from './Components/SignUp';
 import Signin from './Components/Signin';
 import { UserContextProvider } from './UserContext';
 import Create from './Components/Create';
-
+import BlogDetails from './Components/BlogDetails';
 
 function App() {
   return (
@@ -27,11 +27,13 @@ function App() {
           <Route path='/create'>
             <Create />
           </Route>
+          <Route path='/blogs/:id'>
+            <BlogDetails />
+          </Route>
         </Switch>
       </Router>
 
    </UserContextProvider>
   );
 }
-
 export default App;
