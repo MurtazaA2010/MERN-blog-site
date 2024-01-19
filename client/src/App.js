@@ -1,5 +1,5 @@
 //imports
-import './App.css';
+import './CSS/App.css';
 import {BrowserRouter as Router, Switch , Route } from 'react-router-dom'
 import Header from './Components/Header';
 import Blog from './Components/Blog';
@@ -8,6 +8,7 @@ import Signin from './Components/Signin';
 import { UserContextProvider } from './UserContext';
 import Create from './Components/Create';
 import BlogDetails from './Components/BlogDetails';
+import Edit from './Components/Edit';
 
 function App() {
   return (
@@ -30,10 +31,14 @@ function App() {
           <Route path='/blogs/:id'>
             <BlogDetails />
           </Route>
+          <Route path='/edit/:id'>
+            <Edit />
+          </Route>
         </Switch>
       </Router>
 
    </UserContextProvider>
   );
 }
+
 export default App;
