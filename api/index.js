@@ -142,11 +142,10 @@ app.post('/new_blog', uploadMiddleware.single('file'), async (req, res) => {
 app.get('/blogs', async (req, res) => {
     try {
         const blogs = await Blog.find()
-        .populate('author', 'username')
-        .sort({createdAt : -1})
-        .limit(20);
-        ;
-        res.json(blogs);
+            .populate('author', 'username')
+            .sort({createdAt : -1})
+            .limit(20)
+        ;res.json(blogs);
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: 'Internal Server Error' });
@@ -162,3 +161,34 @@ app.get('/blogs/:id', async (req, res) => {
     }
     res.json(Details);
 });
+
+app.put('/blogs',uploadMiddleware.single('file'), (req,res) => {
+    const newPath = null;
+    if(req.file) {
+        const {originalname, path} = req.file;
+        const part = originalname.split(".");
+        const ext = part[part.length -1];
+        const newPath = path+'.'+ext;
+        fs.renameSync(path, newPath);
+    } 
+
+    const {token} = req.cookies;
+
+    jwt.verify(token, secret , {} , async (err, info) => {
+        if(err) throw err;
+        const {id, title, content, snippet, file} = req.body;
+        const blog = await Blog.findById(id); 
+        const isAuthor = JSON.stringify(blog.author) === JSON.stringify(info.id);
+        if(!isAuthor) {
+            res.status(400)
+            throw 'You are not the author'
+        }
+
+        await blog.updateOne({
+            title,
+            content,
+            snippet,
+            file: newPath ? newPath: blog.file
+        })
+    })
+})
