@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap');/*header*/
+.blog-details {
+    margin-left: 100px;
+    margin-right: 100px;
+    font-family: 'Poppins', sans-serif;
+}
+.title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 25px;
+    text-align: center;
+}
+
+.image {
+    display: flex;
+    overflow: hidden;
+}
+
+.image img {
+    width: 800px;
+    object-fit: cover;
+    width: 700px;
+    object-position: center center;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 10px;
+}
+
+.content {
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.date{
+    text-align: center;
+    font-size: .7rem;
+}
+
+.author {
+    text-align: center;
+    font-weight: bold;
+}
+
+.edit button{
+    margin:0 auto;
+    display:block;
+    margin-top: 10px;
+    font-size: 16px;
+    padding: 8px 16px;
+    border: none;
+    background-color: #0b2121;
+    border-radius: 5px;
+    transition: all 500ms;
+    cursor: pointer;
+}
+
+.edit button:hover {
+    opacity: 0.8;
+}
+.edit button a {
+    color: white;
+}
