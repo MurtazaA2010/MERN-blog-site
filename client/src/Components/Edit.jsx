@@ -28,6 +28,7 @@ const Edit = () => {
         'link', 'image',
         'font'
       ]
+    
     if(redirect) {
         history.push('/')
       }
@@ -43,6 +44,7 @@ const Edit = () => {
             })
             .catch(error => console.error('Error fetching blog:', error));
     }, [id]);
+    
     const updateBlog = async (e) => {
         e.preventDefault();
 
