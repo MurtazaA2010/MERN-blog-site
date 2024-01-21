@@ -18,12 +18,12 @@ const Signin= () => {
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
         })
+        
         if(response.ok) {
             response.json().then((userInfo) => {
                 setUserInfo(userInfo);
                 setRedirect(true);
-            })
-            
+            })    
         } else {
             alert('passoword or username is wrong please try again or create a account first')
         }
