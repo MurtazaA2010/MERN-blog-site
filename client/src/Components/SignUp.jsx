@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const SignUp = () => {
