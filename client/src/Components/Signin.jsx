@@ -28,6 +28,7 @@ const Signin= () => {
             alert('passoword or username is wrong please try again or create a account first')
         }
     }
+    
     if(redirect) {
         history.push('/')
     }
