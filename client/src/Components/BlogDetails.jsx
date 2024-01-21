@@ -80,5 +80,4 @@ const BlogDetails = () => {
         </div> 
     );
 }
- 
 export default BlogDetails;
