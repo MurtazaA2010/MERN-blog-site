@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 const Edit = () => {
     const {id} = useParams();
-
     const history = useHistory();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -11,6 +10,7 @@ const Edit = () => {
     const [files, setFiles] = useState('');
     const [redirect , setRedirect] = useState(false);
     const [img, setImg] = useState('');
+    
     const modules = {
         toolbar: [
           [{ 'header': [1, 2, false] }],
@@ -20,6 +20,7 @@ const Edit = () => {
           ['clean']
         ],
       }
+    
       const formats = [
         'header',
         'bold', 'italic', 'underline', 'strike', 'blockquote',
