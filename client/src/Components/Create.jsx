@@ -18,6 +18,7 @@ const Create = () => {
           ['clean']
         ],
       }
+    
       const formats = [
         'header',
         'bold', 'italic', 'underline', 'strike', 'blockquote',
