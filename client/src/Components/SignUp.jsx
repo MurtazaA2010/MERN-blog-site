@@ -20,9 +20,7 @@ const SignUp = () => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-    
-            // You can handle the success here, or check the response data
-           
+        
             const responseData = await response.json();
             history.push('/');
             console.log('Success:', responseData);
