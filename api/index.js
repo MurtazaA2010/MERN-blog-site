@@ -143,7 +143,6 @@ app.post('/new_blog', uploadMiddleware.single('file'), async (req, res) => {
         });
 
         try {
-            // Save the blog and wait for the promise to resolve
             const savedBlog = await blog.save();
             res.json(savedBlog);
         } catch (error) {
