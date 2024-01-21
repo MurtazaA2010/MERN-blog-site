@@ -33,7 +33,6 @@ const logout = () => {
 }
 
 const username = userInfo?.username
-
   return (
     <div className="Header">
       <header>
