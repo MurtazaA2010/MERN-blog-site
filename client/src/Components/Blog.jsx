@@ -23,8 +23,7 @@ const Blog = () => {
             console.error('Fetch error:', error);
         });
     }, []);
-    
-    
+
     return ( 
         <div className="blogs">
             {blogs.length > 0 && blogs.map((blog) => (
@@ -58,9 +57,9 @@ const Blog = () => {
                             </div>
                         </div>
                 </div>
-            ))}
-        </div>
-        
+            )
+        )}
+        </div>   
      );
 }
  
