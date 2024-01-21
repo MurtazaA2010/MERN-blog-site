@@ -112,5 +112,4 @@ const Edit = () => {
         </div> 
     );
 }
- 
 export default Edit;
