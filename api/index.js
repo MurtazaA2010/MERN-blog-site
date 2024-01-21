@@ -91,6 +91,7 @@ app.get('/blogs', async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });
+
 app.get('/profile', (req, res) => {
     const { token } = req.cookies;
 
