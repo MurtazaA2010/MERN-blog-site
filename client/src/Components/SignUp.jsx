@@ -17,7 +17,6 @@ const SignUp = () => {
                 headers: { 'Content-Type': 'application/json' }
             });
 
-    
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
