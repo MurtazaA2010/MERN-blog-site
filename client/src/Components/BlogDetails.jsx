@@ -26,7 +26,6 @@ const BlogDetails = () => {
     const handleDelete = async () => {
         try {
             const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1');
-            // Retrieve the token from cookies
     
             const response = await fetch(`http://localhost:4000/blogs/${id}`, {
                 method: 'DELETE',
