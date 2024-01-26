@@ -1,28 +1,80 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap');/*header*/
-
-.blog-each {
-    margin-top: 10px;
-    display: flex;
-    margin-left: 100px;
-    margin-right: 100px;
-    font-family: 'Poppins', sans-serif;
-    cursor: pointer;
-    border-bottom: 1px solid rgba(1, 1, 1, 0.1);
-    padding-bottom: 10px;
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
 }
 
+a {
+    text-decoration: none;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+h3.title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.blogs {
+    margin: 10px 100px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+.blog-each {
+    padding-bottom: 10px;
+    border-radius: 10px;
+    max-width: 282px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 .blog-img img {
     width: 280px;
     height: 200px;
-    border-radius: 10px;
+    border-radius: 10px 10px 0px 0px;
     transition: all 500ms;
     
 }
 
 .blog-img img:hover {
     opacity: 0.8;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .blog-txt {
-    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.button button {
+    margin:0 auto;
+    display:block;
+    background-color: #4acc80;
+    border: none;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 500ms;
+}
+
+.button button a {
+    color: white;
+    font-size: 16px;
+}
+.button button:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+}
+@media (max-width: 768px) {
+    .blogs {
+        margin: 10px;
+    }
+
+    .blog-each {
+        max-width: 100%;
+        /* ... other adjustments for smaller screens */
+    }
 }
