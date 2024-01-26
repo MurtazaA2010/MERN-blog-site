@@ -11,7 +11,6 @@ const SignUp = () => {
 
     const handleSignUp = async (e) => {
         e.preventDefault();
-
         const data = new FormData();
 
         data.set('username', username);
