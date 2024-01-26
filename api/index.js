@@ -31,11 +31,19 @@ app.use(cookieparser());
 app.use(express.urlencoded({extended : true}))
 app.use('/uploads', express.static(__dirname + '/uploads'))
 
-app.post('/signup', (req, res)=> {
+app.post('/signup', uploadMiddleware.single('proImg'),(req, res)=> {
+    const { originalname, path } = req.file; // Change from req.proImg to req.file
+    const part = originalname.split(".");
+    const ext = part[part.length - 1];
+    const newPath = path + '.' + ext;
+
+    fs.renameSync(path, newPath);
+
     const {username, password} = req.body;
     const user = new User ({
         username, 
-        password:bcrypt.hashSync(password, saltRounds)
+        password:bcrypt.hashSync(password, saltRounds),
+        proImg : newPath,
     });
     user.save()
     .then((result) => {
@@ -75,6 +83,7 @@ app.post('/signin', async (req, res) => {
     }
 });
 
+
 app.post('/logout', (req, res)=> {
     res.cookie('token', '').json('ok')
 })
@@ -91,7 +100,6 @@ app.get('/blogs', async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });
-
 app.get('/profile', (req, res) => {
     const { token } = req.cookies;
 
@@ -143,6 +151,7 @@ app.post('/new_blog', uploadMiddleware.single('file'), async (req, res) => {
         });
 
         try {
+            // Save the blog and wait for the promise to resolve
             const savedBlog = await blog.save();
             res.json(savedBlog);
         } catch (error) {
@@ -167,7 +176,7 @@ app.put('/blogs/:id', uploadMiddleware.single('file'), async (req, res) => {
     const newPath = req.file ? req.file.path : null;
 
     const { token } = req.cookies;
-
+    res.send(token)
     jwt.verify(token, secret, {}, async (err, info) => {
         if (err) {
             res.status(401).json({ message: 'Invalid JWT' });
@@ -183,7 +192,9 @@ app.put('/blogs/:id', uploadMiddleware.single('file'), async (req, res) => {
                 return;
             }
 
-            const isAuthor = blog.author.toString() === info.id;
+            // const isAuthor = blog.author.toString() === info.id;
+
+            const isAuthor = JSON.stringify(blog.author) === JSON.stringify(info.id)
 
             if (!isAuthor) {
                 res.status(403).json({ message: 'You are not the author' });
@@ -212,25 +223,21 @@ app.delete('/blogs/:id', async (req, res) => {
 
     try {
         const blog = await Blog.findById(id);
+        // await /;
 
-        if (!blog) {
-            res.status(404).json({ message: 'Blog not found' });
-            return;
-        }
-
-        const { token } = req.cookies;
+        const { token } = req.cookies;  
+        console.log(token)
 
         jwt.verify(token, secret, {}, async (err, info) => {
             if (err) {
-                res.status(401).json({ message: 'Invalid JWT' });
-                return;
+                return res.status(401).json({ message: 'Invalid JWT' });
             }
 
-            const isAuthor = blog.author.toString() === info.id;
+            const isAuthor = JSON.stringify(blog.author) === JSON.stringify(info.id);
+
 
             if (!isAuthor) {
-                res.status(403).json({ message: 'You are not the author' });
-                return;
+                return res.status(403).json({ message: 'You are not the author' });
             }
 
             // Remove the associated file (if it exists)
@@ -239,10 +246,10 @@ app.delete('/blogs/:id', async (req, res) => {
             }
 
             await Blog.findByIdAndDelete(id);
-            res.json({ message: 'Blog deleted successfully' });
+            return res.json({ message: 'Blog deleted successfully' });
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        return res.status(500).json({ message: 'Internal Server Error' });
     }
 });
