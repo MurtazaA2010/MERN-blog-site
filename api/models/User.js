@@ -7,9 +7,14 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         min:4 ,
-        unique: true
+        max: 35,
+        unique: true,
     },
     password : {
+        type: String,
+        required: true,
+    },
+    proImg : {
         type: String,
         required: true,
     }
