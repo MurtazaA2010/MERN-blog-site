@@ -32,8 +32,7 @@ const SignUp = () => {
             history.push('/');
             console.log('Success:', responseData);
             alert('Registration Succesful');
-        
-            } 
+        } 
             catch (error) {
             console.error('Error:', error);
             alert('Registration err try again later')
