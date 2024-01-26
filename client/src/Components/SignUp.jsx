@@ -1,26 +1,38 @@
 import { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
     const history = useHistory();
     console.log(history)
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [proImg, setproImg] = useState('');
 
     const handleSignUp = async (e) => {
         e.preventDefault();
+
+        const data = new FormData();
+
+        data.set('username', username);
+        data.set('password', password);
+        data.set('proImg', proImg[0]);
     
         try {
             const response = await fetch('http://localhost:4000/signup', {
                 method: 'POST',
-                body: JSON.stringify({ username, password }),
-                headers: { 'Content-Type': 'application/json' }
+                body: data,
+                headers: { 'Content-Type': 'multipart/form-data' },
+
             });
 
+    
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-        
+    
+            // You can handle the success here, or check the response data
+           
             const responseData = await response.json();
             history.push('/');
             console.log('Success:', responseData);
@@ -36,13 +48,20 @@ const SignUp = () => {
     return ( 
         <div className="sign-up">
             <h3>Sign Up</h3>
-            <form action="" onSubmit={handleSignUp}>
+            <form action="" onSubmit={handleSignUp} encType="multipart/form-data">
+                <input 
+                    type="file" 
+                    required
+                    onChange={(e) => setproImg(e.target.files)}
+                />
                 <input 
                     type="text" 
                     placeholder="Username"
                     required
                     value={username}
                     onChange={(e)=> {setUsername(e.target.value)}}
+                    min={'4'}
+                    max={"35"}
                 />
                 <br />
                 <input 
@@ -56,7 +75,10 @@ const SignUp = () => {
                 <button>Sign Up</button>
             </form>
             <p>Already have an account? <Link to='/login'>Sign In</Link></p>
+
         </div>
+
      );
 }
+ 
 export default SignUp;
